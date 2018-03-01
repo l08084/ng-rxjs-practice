@@ -1,10 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
+  template: `{{ value }}`,
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'app';
+export class AppComponent implements OnInit {
+  value = 0;
+
+  ngOnInit() {
+    Observable.fromEvent(document, 'click')
+    .map(_ => 1)
+    .scan((acc, value) => acc + value)
+    .subscribe(value => this.value = value);
+  }
 }
